@@ -4,6 +4,7 @@ const express     = require('express');
 const bodyParser  = require('body-parser');
 const cors        = require('cors');
 require('dotenv').config();
+const mongoose = require('mongoose');
 
 const apiRoutes         = require('./routes/api.js');
 const fccTestingRoutes  = require('./routes/fcctesting.js');
@@ -11,6 +12,14 @@ const runner            = require('./test-runner');
 
 const app = express();
 
+// conection 
+mongoose.connect(process.env.MONGO_URI,(err)=>{
+  if(err){
+    console.log("failed connection")
+  }else{
+    console.log("successfull connection")
+  }
+})
 app.use('/public', express.static(process.cwd() + '/public'));
 
 app.use(cors({origin: '*'})); //USED FOR FCC TESTING PURPOSES ONLY!
